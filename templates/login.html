@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login — Paralegal AI Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main>
+      <h1>Sign In</h1>
+      <form method="post" action="/login">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <label for="username">Username</label>
+        <input id="username" name="username" />
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+
+        <input type="hidden" name="next" value="{{ request.args.get('next', '') }}" />
+
+        <button type="submit">Sign in</button>
+      </form>
+
+      <p><a href="/reset">Forgot password?</a></p>
+
+      <p class="disclaimer">If no authentication is configured, signing in will create a development session.</p>
+    </main>
+  </body>
+  </html>

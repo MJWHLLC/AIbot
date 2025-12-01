@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paralegal AI Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main>
+      <h1>Paralegal AI Assistant (Prototype)</h1>
+      <p class="disclaimer">I am a paralegal AI assistant working under attorney supervision. This is not legal advice and requires attorney review.</p>
+
+      <form action="/ask" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <label for="document_type">Document Type</label>
+        <select id="document_type" name="document_type" required>
+          <option value="">-- Select Document Type --</option>
+          <option value="complaint">Complaint (Federal)</option>
+          <option value="motion">Motion for Summary Judgment</option>
+          <option value="discovery">Discovery Request</option>
+          <option value="affidavit">Affidavit</option>
+          <option value="subpoena">Subpoena</option>
+          <option value="General Legal Research">General Legal Research</option>
+        </select>
+
+        <label for="jurisdiction">Jurisdiction</label>
+        <select id="jurisdiction" name="jurisdiction">
+          <option value="Federal" selected>Federal</option>
+          <option value="New York">New York</option>
+          <option value="California">California</option>
+          <option value="Texas">Texas</option>
+          <option value="Other State">Other State</option>
+        </select>
+
+        <label for="jurisdiction">Jurisdiction</label>
+        <input id="jurisdiction" name="jurisdiction" value="Federal" />
+
+        <label for="query">Question / Details</label>
+        <textarea id="query" name="query" rows="6"></textarea>
+
+        <button type="submit">Ask</button>
+      </form>
+
+      <form method="post" action="/logout" style="margin-top:1rem">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button type="submit">Sign out</button>
+      </form>
+
+      {% if result %}
+      <section class="result">
+        <h2>Response</h2>
+        <pre>{{ result }}</pre>
+      </section>
+      {% endif %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin — Paralegal AI Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main>
+      <h1>Admin — Users</h1>
+
+      <section>
+        <h2>Create User</h2>
+        <form method="post" action="/admin/create">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <label for="username">Username</label>
+          <input id="username" name="username" />
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" />
+
+          <label><input type="checkbox" name="is_admin" value="1" /> Is admin</label>
+
+          <button type="submit">Create</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Send Invite</h2>
+        <form method="post" action="/admin/invite">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <label for="invite_username">Username</label>
+          <input id="invite_username" name="username" />
+          
+          <label for="invite_email">Email</label>
+          <input id="invite_email" name="email" type="email" />
+          
+          <p><small>User will receive an invite link via email to set their password.</small></p>
+          <button type="submit">Generate Invite Link</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Existing Users</h2>
+        <ul>
+          {% for u in users %}
+            <li>{{ u.username }} {% if u.is_admin %}(admin){% endif %}
+              <form method="post" action="/admin/delete" style="display:inline">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <input type="hidden" name="username" value="{{ u.username }}" />
+                <button type="submit">Delete</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <a href="/">Back</a>
+    </main>
+  </body>
+  </html>
