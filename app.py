@@ -5,11 +5,11 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from dotenv import load_dotenv
 
-from .model_client import ModelClient
-from .prompts import build_document_prompt
-from .auth import login_required, login_user, logout_user, current_user, authenticate, admin_required
-from .users import create_user, list_users, delete_user, get_user, generate_token, validate_token, consume_token
-from .mail import init_mail, send_invite_email, send_password_reset_email
+from model_client import ModelClient
+from prompts import build_document_prompt
+from auth import login_required, login_user, logout_user, current_user, authenticate, admin_required
+from users import create_user, list_users, delete_user, get_user, generate_token, validate_token, consume_token
+from mail import init_mail, send_invite_email, send_password_reset_email
 from flask_wtf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
 
