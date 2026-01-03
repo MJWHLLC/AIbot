@@ -28,6 +28,15 @@ def test_ask_mock(client, monkeypatch):
     # Ensure model client runs in mock mode by removing token env var
     monkeypatch.delenv("GITHUB_MODEL_API_TOKEN", raising=False)
     monkeypatch.delenv("GITHUB_MODEL_NAME", raising=False)
+    monkeypatch.delenv("AUTH_USERNAME", raising=False)
+    
+    # Login first (auth is disabled when AUTH_USERNAME is not set)
+    rv = client.post(
+        "/login",
+        data={"username": "testuser", "password": ""},
+        follow_redirects=True
+    )
+    assert rv.status_code == 200
 
     rv = client.post(
         "/ask",
@@ -35,7 +44,7 @@ def test_ask_mock(client, monkeypatch):
         follow_redirects=True,
     )
     assert rv.status_code == 200
-    assert b"MOCK RESPONSE" in rv.data or b"Response" in rv.data
+    assert b"MOCK RESPONSE" in rv.data or b"mocked" in rv.data.lower()
 
 
 def test_invite_flow(client):
