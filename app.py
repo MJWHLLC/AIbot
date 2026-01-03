@@ -12,6 +12,7 @@ from users import create_user, list_users, delete_user, get_user, generate_token
 from mail import init_mail, send_invite_email, send_password_reset_email
 from flask_wtf import CSRFProtect
 from flask_wtf.csrf import generate_csrf
+from api import register_api_routes
 
 load_dotenv()
 
@@ -35,6 +36,9 @@ app.jinja_env.globals["csrf_token"] = generate_csrf
 
 # Initialize model client. It reads API config from environment variables.
 model_client = ModelClient()
+
+# Register API routes for Odoo integration
+register_api_routes(app, model_client)
 
 
 @app.route("/", methods=["GET"])
