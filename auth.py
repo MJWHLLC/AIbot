@@ -12,7 +12,7 @@ from functools import wraps
 from typing import Optional
 from flask import session, redirect, url_for, request, flash
 
-from . import users
+import users
 
 
 def authenticate(username: str, password: str) -> bool:
